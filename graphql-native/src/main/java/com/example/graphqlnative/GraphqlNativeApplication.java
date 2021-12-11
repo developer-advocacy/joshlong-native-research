@@ -4,12 +4,10 @@ import graphql.execution.instrumentation.Instrumentation;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.graphql.boot.GraphQlAutoConfiguration;
 import org.springframework.graphql.boot.GraphQlProperties;
 import org.springframework.graphql.boot.GraphQlSourceBuilderCustomizer;
 import org.springframework.graphql.boot.InvalidSchemaLocationsException;
@@ -24,8 +22,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@EnableConfigurationProperties(GraphQlProperties.class)
-@SpringBootApplication(exclude = GraphQlAutoConfiguration.class)
+@SpringBootApplication 
 public class GraphqlNativeApplication {
 
     public static void main(String[] args) {
@@ -34,7 +31,7 @@ public class GraphqlNativeApplication {
 
 
     @Bean
-    GraphQlSource graphQlSource(ResourcePatternResolver resourcePatternResolver,
+    GraphQlSource myGraphqlSource (ResourcePatternResolver resourcePatternResolver,
                                 GraphQlProperties properties,
                                 ObjectProvider<DataFetcherExceptionResolver> exceptionResolversProvider,
                                 ObjectProvider<Instrumentation> instrumentationsProvider,

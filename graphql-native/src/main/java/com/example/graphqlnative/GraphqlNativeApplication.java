@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SpringBootApplication 
+@SpringBootApplication
 public class GraphqlNativeApplication {
 
     public static void main(String[] args) {
@@ -31,12 +31,12 @@ public class GraphqlNativeApplication {
 
 
     @Bean
-    GraphQlSource myGraphqlSource (ResourcePatternResolver resourcePatternResolver,
-                                GraphQlProperties properties,
-                                ObjectProvider<DataFetcherExceptionResolver> exceptionResolversProvider,
-                                ObjectProvider<Instrumentation> instrumentationsProvider,
-                                ObjectProvider<GraphQlSourceBuilderCustomizer> sourceCustomizers,
-                                ObjectProvider<RuntimeWiringConfigurer> wiringConfigurers) {
+    GraphQlSource myGraphqlSource(ResourcePatternResolver resourcePatternResolver,
+                                  GraphQlProperties properties,
+                                  ObjectProvider<DataFetcherExceptionResolver> exceptionResolversProvider,
+                                  ObjectProvider<Instrumentation> instrumentationsProvider,
+                                  ObjectProvider<GraphQlSourceBuilderCustomizer> sourceCustomizers,
+                                  ObjectProvider<RuntimeWiringConfigurer> wiringConfigurers) {
 
         String location = properties.getSchema().getLocations()[0];
         List<Resource> schemaResources = List.of(new ClassPathResource(location));

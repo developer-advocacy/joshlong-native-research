@@ -29,14 +29,19 @@ public class GraphqlNativeApplication {
         SpringApplication.run(GraphqlNativeApplication.class, args);
     }
 
-
+    /**
+     * The autoconfiguration, as of Spring Native 1.0.0-SNAPSHOT in middle December 2021,
+     * uses a {@link  ResourcePatternResolver} which requires us to scour the classpath for files.
+     * Trouble is, in a GraalVM application, there's no classpath, so that mechanism doesn't work.
+     * Hopefully we can remove this in the future. This works because we hardcode a single static {@link Resource}
+     */
     @Bean
-    GraphQlSource myGraphqlSource(ResourcePatternResolver resourcePatternResolver,
-                                  GraphQlProperties properties,
-                                  ObjectProvider<DataFetcherExceptionResolver> exceptionResolversProvider,
-                                  ObjectProvider<Instrumentation> instrumentationsProvider,
-                                  ObjectProvider<GraphQlSourceBuilderCustomizer> sourceCustomizers,
-                                  ObjectProvider<RuntimeWiringConfigurer> wiringConfigurers) {
+    GraphQlSource graalvmCompatibleGraphqlSource(
+            GraphQlProperties properties,
+            ObjectProvider<DataFetcherExceptionResolver> exceptionResolversProvider,
+            ObjectProvider<Instrumentation> instrumentationsProvider,
+            ObjectProvider<GraphQlSourceBuilderCustomizer> sourceCustomizers,
+            ObjectProvider<RuntimeWiringConfigurer> wiringConfigurers) {
 
         String location = properties.getSchema().getLocations()[0];
         List<Resource> schemaResources = List.of(new ClassPathResource(location));
@@ -49,7 +54,7 @@ public class GraphqlNativeApplication {
         try {
             return builder.build();
         } catch (MissingSchemaException exc) {
-            throw new InvalidSchemaLocationsException(new String[]{location}, resourcePatternResolver, exc);
+            throw new IllegalArgumentException("we could not find the schema files!");
         }
     }
 }

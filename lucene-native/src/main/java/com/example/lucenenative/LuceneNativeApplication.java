@@ -17,16 +17,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@TypeHint(
-        types = {
-                org.apache.lucene.analysis.tokenattributes.PackedTokenAttributeImpl.class ,
-        },
-        access = {
-                TypeAccess.DECLARED_CLASSES,
-                TypeAccess.DECLARED_CONSTRUCTORS,
-                TypeAccess.DECLARED_FIELDS,
-                TypeAccess.DECLARED_METHODS,
-        })
 @SpringBootApplication
 public class LuceneNativeApplication {
 
